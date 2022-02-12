@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Item } from "./Item"
+let id = 0;
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+export default function App() {
+  const [items, setItems] = useState([]);
+  const [item, setItem] = useState(newItem())
+  return <>
+    <div>
+      <button
+        onClick={() => {
+          setItem(newItem())
+        }}
+      >
+        new
+      </button>
+      <Item item={item} setItem={setItem} />
+      <button
+        onClick={() => {
+          setItems(its => [...its, item])
+        }}
+      >
+        add
+      </button>
+      <ul>
+        {items.map(i =>
+          <li
+            key={i.id}
+          >{i.value}
+          </li>)}
+      </ul>
     </div>
-  );
+  </>
 }
 
-export default App;
+function newItem() {
+  const ni = { id: ++id, value: "a" };
+  return ni;
+}
